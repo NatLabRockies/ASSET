@@ -209,7 +209,7 @@ ASSET is distributed under the permissive license included at the top of the cor
 Copyright © 2026 Alliance for Energy Innovation, LLC.
 
 **Software Record of Invention**  
-Pranav Sharma, Shahil Shah, Bin Wang, and Leonardo Rese, “Automated System-wide Strength Evaluation Tool (ASSET).”
+Pranav Sharma, and Shahil Shah, “Automated System-wide Strength Evaluation Tool (ASSET).”
 
 ---
 
