@@ -1,89 +1,141 @@
-# ⚡ Automated Systemwide Strength Evaluation Tool (ASSET)
+# Automated System-wide Strength Evaluation Tool (ASSET)
 
-**ASSET** is a free and open-source tool built with Python and [PSS®E](https://new.siemens.com/global/en/products/energy/services/transmission-distribution-smart-grid/pss-software/pss-e.html), designed to automatically assess and analyze grid strength across large-scale power systems. It supports multiple system operating conditions and contingencies, and outputs results in a tabular format for easy interpretation.
+ASSET is a Python + PSS/E workflow for grid-strength analysis at points of interconnection (POIs). The current repository has been streamlined to focus on two production analysis paths:
 
-National Renewable Energy Laboratory - Software Record Number - SWR-24-03
+- SCR-focused analysis modes in `main.py`
+- EET-based sensitivity, manual tuning, and optimization in `EET_implementation.py`
 
----
+## Current Repository Structure
 
-## 🚀 Features
+Core files:
 
-- ✅ **Automated grid strength computation** for a list of given buses or Points of Interconnection (POIs).
-- ⚠️ **Identify critical network contingencies** impacting grid strength at selected buses/POI.
-- 🔍 **Analyze the impact of pre-determined contingencies** on system strength at specified buses.
-- 🧮 **SCRIF** – Interaction Factor-based Short-Circuit Ratio computation that accounts for voltage sensitivity of neighboring POIs, providing a more conservative and realistic assessment of system strength.
-- 📍 **Optimal sizing and location of grid strengthening devices** _(coming soon)_.
+- `main.py`
+	- Unified SCR workflow with four analysis modes.
+- `EET_implementation.py`
+	- EET workflow for sensitivity, manual interactive GSD tuning, and optional optimization.
+- `assetlib.py`
+	- Core computation library (short-circuit parsing, N-1/N-2 helpers, EET core matrix build and derivatives).
+- `offtheshlef_optimization.py`
+	- Off-the-shelf optimization routines used by EET mode 2.
 
----
+Support folders:
 
-## 🖼️ Workflow Overview
+- `input/` for case and CSV inputs
+- `ctg/` for contingency definitions
+- `output/` and `output_EET/` for generated results
+- `pssepath/` for local path helper utilities
 
-![ASSET Workflow](input/asset_flowchart.png)
+## Capabilities
 
+### 1) SCR workflow (`main.py`)
 
----
+`main.py` supports four modes via `GUIinput_SimMode`:
 
-## 🧪 Applications
+- `0`: Base SCR (N-0)
+- `1`: SCRIF (interaction-factor-based SCR)
+- `2`: Critical N-1/N-2 SCR
+- `3`: Contingency scan from `ctg/*.csv`
 
-ASSET has been used in the analysis of real-world power systems, including:
+Typical outputs include mode-specific SCR and SCMVA CSV files in `output/`.
 
-1. [Grid strength studies for U.S. Eastern Interconnect](https://www.nrel.gov/docs/fy24osti/88003.pdf) 🌐
-2. [Puerto Rico grid resiliencey studies](https://www.nrel.gov/docs/fy24osti/88615.pdf) 🇵🇷
-3. [Grid strength studies for U.S. Western Interconnect (WECC) system](https://www.osti.gov/servlets/purl/2500279/) 🌐
-4. [Subnational strategies to improve grid quality and reduce energy costs in Argentina](https://www.nrel.gov/docs/fy25osti/91767.pdf) 🇦🇷
+### 2) EET workflow (`EET_implementation.py`)
 
----
+`EET_implementation.py` supports three modes via `GUIinput_EET_Mode`:
 
-## 📚 Citation
+- `1`: Sensitivity and gamma outputs
+- `2`: Sensitivity + optimization-based GSD sizing
+- `3`: Sensitivity + manual interactive GSD tuning (slider UI)
 
+Typical outputs are written to `output_EET/`, including:
 
-If you use ASSET in your research or publications, please cite the following papers:
+- `result_S_i0.csv`
+- `result_SCR_i0.csv`
+- `result_S_k0.csv`
+- `result_S_ki_matrix.csv`
+- `result_Sensitivity.csv`
+- `result_Gamma_max_improvement.csv`
+- `sensitivity_heatmap.png`
+- `gamma_heatmap_log1p.png`
+- (mode 2) `result_GSD_sizing.csv`
+- (mode 3) `result_GSD_manual_values.csv`, `result_SCR_manual_comparison.csv`, `manual_gsd_scr_comparison.png`
+
+## Requirements
+
+- Windows environment with PSS/E installed and licensed
+- Python environment compatible with your PSS/E install
+- Installed modules used by the scripts:
+	- `numpy`
+	- `pandas`
+	- `matplotlib`
+	- `seaborn`
+	- `scipy` (required for optimization mode)
+
+Notes:
+
+- The scripts currently use explicit PSS/E paths in code.
+- Verify `PSSE_Path` and `PSSPY_Path` variables in `main.py`, `EET_implementation.py`, and `assetlib.py` for your machine.
+
+## How to Run
+
+### Run SCR workflow
+
+1. Configure paths and mode in `main.py`:
+	 - `GUIinput_powerflowfile`
+	 - `GUIinput_poidata`
+	 - `GUIinput_outputfolder`
+	 - `GUIinput_contfolder` (for mode 3)
+	 - `GUIinput_SimMode`
+2. Execute:
+
 ```bash
-P. Sharma and S. Shah, "Application of the Extra Element Theorem for Grid Strength Analysis in IBR-Dominated Systems," 2025 IEEE Power & Energy Society General Meeting (PESGM), Austin, Texas, USA, 2025
+python main.py
 ```
 
----
+### Run EET workflow
 
-## 📝 License
-
-ASSET is released under the **BSD License**.  Copyright © Alliance for Sustainable Energy LLC.
-
-**NREL Software Record of Invention**  
-Pranav Sharma, Shahil Shah, Bin Wang, Leonardo Rese –  “Automated System‑wide Strength Evaluation Tool (ASSET)”.
-
----
-
-## ⚙️ Installation
-
-**Clone the repository**
+1. Configure paths and mode in `EET_implementation.py`:
+	 - `GUIinput_powerflowfile`
+	 - `GUIinput_poidata`
+	 - `GUIinput_candidate`
+	 - `GUIinput_outputfolder`
+	 - `GUIinput_EET_Mode`
+2. Execute:
 
 ```bash
-git clone https://github.com/NREL/ASSET.git
-cd asset
-
+python EET_implementation.py
 ```
 
----
+## Input Data Expectations
 
-## ✉️ Contact
+The workflows assume CSV inputs with repository-style columns.
 
-For questions, feedback, or other inquiries, please reach out to **shahil.shah@nrel.gov**.
+At minimum:
 
-For our related work in the domain of Power systems stability, please visit:  [**Grid Impedance Scan Tool**](https://www.nrel.gov/grid/impedance-measurement)
-         
----
+- POI data contains `POI bus #` and `MW capacity`
+- Candidate data contains `Candidate bus #`
 
-## 🤝 Contributing
+For contingency mode, the `ctg/` folder should contain compatible contingency definition CSV files.
 
-We welcome contributions of all kinds—code, documentation, testing, or feature suggestions.
+## Citation
 
-1. **Fork** the repository and create your branch from `main`.
-2. **Commit** your changes with clear messages.
-3. **Open a Pull Request** (PR) describing what you changed and why.
-4. One of the maintainers will review your PR, suggest any revisions, and merge when ready.
+If you use ASSET in publications, cite:
 
-If you’d like to discuss an idea before coding, please open an **Issue** or email us directly at **shahil.shah@nrel.gov**.
+```text
+Pranav Sharma and Shahil Shah, "Sizing and Placement of Grid Strengthening Devices Using Extra Element Theorem," in IEEE Open Access Journal of Power and Energy, Sep. 2026, doi: 10.1109/OAJPE.2026.3732363.
 
-> **New to Git or GitHub?** Check out the [GitHub Docs “Fork a repo” guide](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+Pranav Sharma, Shahil Shah, "Application of the Extra Element Theorem for Grid Strength Analysis in IBR-Dominated Systems", 2025 IEEE Power & Energy Society General Meeting (PESGM), Austin, Texas, USA, 2025.
 
-Thank you for helping make ASSET better!
+# ==============================================
+```
+
+## License
+
+This codebase is distributed under the permissive license text included at the top of core source files.
+
+Copyright (c) 2026 Alliance for Energy Innovation, LLC.
+
+## Contact
+
+For questions and collaboration inquiries:
+
+- shahil.shah@nlr.gov
