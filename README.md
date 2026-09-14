@@ -29,7 +29,7 @@ ASSET contains two complementary workflows: one for system-wide grid-strength as
 
 ![ASSET grid-strength analysis workflow](input/asset_flowchart.png)
 
-### EET-Based GSD Allocation
+### EET-Based GSD Allocation ([Read our paper!](https://ieeexplore.ieee.org/document/11686047))
 
 ![EET-based sensitivity analysis and GSD allocation workflow](input/EET_workflow.png)
 
@@ -196,7 +196,9 @@ If you use ASSET in your research or publications, please cite:
 
 ```text
 P. Sharma and S. Shah, "Sizing and Placement of Grid Strengthening Devices Using Extra Element Theorem," IEEE Open Access Journal of Power and Energy, 2026, doi: 10.1109/OAJPE.2026.3732363.
+```
 
+```text
 P. Sharma and S. Shah, "Application of the Extra Element Theorem for Grid Strength Analysis in IBR-Dominated Systems," 2025 IEEE Power & Energy Society General Meeting (PESGM), Austin, TX, USA, 2025.
 ```
 
