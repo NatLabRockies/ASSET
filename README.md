@@ -17,7 +17,7 @@ ASSET provides modular workflows and tabular outputs that support efficient anal
 - 🔍 **EET-based sensitivity analysis** to quantify how GSD placement at candidate buses affects grid strength at each POI.
 - 📍 **Optimal GSD allocation** to determine device locations and sizes that meet the desired grid strength with minimum total GSD capacity.
 - 🎛️ **Interactive manual GSD tuning** for exploring candidate allocations and comparing resulting SCR values.
-- 📊 **Analysis-ready outputs**, including CSV results, sensitivity heatmaps, gamma plots, and GSD allocation comparisons.
+- 📊 **Analysis-ready outputs**, including CSV results, sensitivity heatmaps, and GSD allocation comparisons.
 
 ---
 
