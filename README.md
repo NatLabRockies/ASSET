@@ -183,10 +183,10 @@ Typical EET outputs in `output_EET/` include:
 
 ASSET has been used to study real-world power systems, including:
 
-1. [Grid-strength studies for the U.S. Eastern Interconnection](https://www.nrel.gov/docs/fy24osti/88003.pdf) 🌐
-2. [Puerto Rico grid-resilience studies](https://www.nrel.gov/docs/fy24osti/88615.pdf) 🇵🇷
+1. [Grid-strength studies for the U.S. Eastern Interconnection](https://docs.nlr.gov/docs/fy24osti/88003.pdf) 🌐
+2. [Puerto Rico grid-resilience studies](https://docs.nlr.gov/docs/fy24osti/88384.pdf) 🇵🇷
 3. [Grid-strength studies for the U.S. Western Interconnection (WECC)](https://www.osti.gov/servlets/purl/2500279/) 🌐
-4. [Subnational strategies to improve grid quality and reduce energy costs in Argentina](https://www.nrel.gov/docs/fy25osti/91767.pdf) 🇦🇷
+4. [Subnational strategies to improve grid quality and reduce energy costs in Argentina](https://docs.nlr.gov/docs/fy25osti/91767.pdf) 🇦🇷
 
 ---
 
@@ -217,7 +217,7 @@ Pranav Sharma, and Shahil Shah, “Automated System-wide Strength Evaluation Too
 
 For questions, feedback, or collaboration inquiries, contact **shahil.shah@nlr.gov**.
 
-For related work in power-system stability, visit the [Grid Impedance Scan Tool](https://www.nrel.gov/grid/impedance-measurement).
+For related work in power-system stability, visit the [Grid Impedance Scan Tool](https://www.nlr.gov/grid/impedance-measurement).
 
 ---
 
